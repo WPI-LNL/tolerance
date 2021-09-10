@@ -3,7 +3,7 @@ import sys
 from setuptools import setup, find_packages
 
 NAME = 'tolerance'
-VERSION = '0.1.2'
+VERSION = '1.0.0'
 
 
 def read(filename):
@@ -21,29 +21,22 @@ def readlist(filename):
     return list(rows)
 
 
-setup_extras = {}
-if sys.version_info > (3,):
-    setup_extras['use_2to3'] = True
-
 setup(
     name=NAME,
     version=VERSION,
     description=('A function decorator which makes a function tolerant ('
                  'the function fail silently).'),
     long_description=read('README.rst'),
-    classifiers=(
+    classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
-    ),
+    ],
     keywords='function decorator, decorator, fail silently',
     author='Alisue',
     author_email='lambdalisue@hashnote.net',
@@ -62,6 +55,5 @@ setup(
              'requirements-docs.txt'],
     },
     zip_safe=True,
-    install_requires=readlist('requirements.txt'),
-    **setup_extras
+    install_requires=readlist('requirements.txt')
 )
