@@ -1,39 +1,15 @@
 tolerance
 ==========================
-.. image:: https://secure.travis-ci.org/lambdalisue/tolerance.png?branch=master
-    :target: http://travis-ci.org/lambdalisue/tolerance
-    :alt: Build status
-
-.. image:: https://coveralls.io/repos/lambdalisue/tolerance/badge.png?branch=master
-    :target: https://coveralls.io/r/lambdalisue/tolerance/
-    :alt: Coverage
-
-.. image:: https://img.shields.io/pypi/dm/tolerance.svg
-    :target: https://pypi.python.org/pypi/tolerance/
-    :alt: Downloads
-
-.. image:: https://img.shields.io/pypi/v/tolerance.svg
-    :target: https://pypi.python.org/pypi/tolerance/
-    :alt: Latest version
-
-.. image:: https://img.shields.io/pypi/wheel/tolerance.svg
-    :target: https://pypi.python.org/pypi/tolerance/
-    :alt: Wheel Status
-
-.. image:: https://pypip.in/egg/tolerance/badge.png
-    :target: https://pypi.python.org/pypi/tolerance/
-    :alt: Egg Status
-
 .. image:: https://img.shields.io/pypi/l/tolerance.svg
     :target: https://pypi.python.org/pypi/tolerance/
     :alt: License
 
 Author
-    Alisue <lambdalisue@hashnote.net>
+    Alisue <lambdalisue@hashnote.net> (Forked from)
 Supported python versions
-    2.6, 2.7, 3.2, 3.3, 3.4
+    3.2, 3.3, 3.4
 
-Do you often write the fail silent codes like below?
+Do you often write code to fail silently like below?
 
 .. code-block:: python
 
@@ -44,17 +20,17 @@ Do you often write the fail silent codes like below?
         # fail silently
         return ""
 
-This kind of codes are often found in Django_ projects or programs which should
-not raise any exceptions in product mode.
+This kind of code can often be found in Django_ projects or programs which should
+not raise any exceptions in production.
 
 **tolerance** is a function decorator to make a tolerant function; a function
-which does not raise any exceptions even there are exceptions.
-This concept is quite useful for making stable product or ``prefer_int`` types
-of code described in Usage section.
+which does not raise any exceptions even when there are errors.
+This concept is quite useful for making a stable product or ``prefer_int`` types
+of code described in the Usage section.
 
 .. _Django: https://www.djangoproject.com/
 
-Check
+Check the 
 `online documentation <http://python-tolerance.readthedocs.org/en/latest/>`_
 for more details.
 
@@ -66,11 +42,11 @@ Features
     is not callable.
     The function returns a "returned value" from ``substitute`` function when
     it is callable.
-+   Ignoreing exceptions can be specified as a exception class list with
++   Ignoring exceptions can be specified as a exception class list with
     ``exceptions`` argument.
 +   When ``fail_silently=False`` is passed to the decorated function,
     the function does not ignore exceptions (the argument name can be changed
-    with making switch function via ``argument_switch_generator`` function).
+    by making a switch function via ``argument_switch_generator`` function).
 
 Installation
 ------------
@@ -82,9 +58,9 @@ Use pip_ like::
 
 Usage
 -----
-Assume that you need a function which convert a string to an integer when it is
+Assume that you need a function which converts a string to an integer when it is
 possible.
-Without tolerance, you need to write a code like below
+Without tolerance, you might need to write code that looks like this
 
 .. code-block:: python
 
@@ -102,7 +78,7 @@ Without tolerance, you need to write a code like below
     >>> prefer_int_withot_tolerance('zero')
     'zero'
 
-However, with tolerance, you just need to write a single line code like
+However, with tolerance, you just need to write a single line of code like
 
 .. code-block:: python
 
@@ -115,7 +91,7 @@ However, with tolerance, you just need to write a single line code like
     >>> prefer_int('zero')
     'zero'
 
-Or you can use ``tolerate`` as a function decorator described in PEP-318_
+Or you can use ``tolerate`` as a function decorator as described in PEP-318_
 
 .. code-block:: python
 
@@ -130,12 +106,12 @@ Or you can use ``tolerate`` as a function decorator described in PEP-318_
     >>> prefer_int_318('zero')
     'zero'
 
-The example codes above  specify ``substitute`` argument of ``tolerate``
+The example code above uses the ``substitute`` argument of the ``tolerate``
 function to specify the returning value when the function has failed (
 ``lambda x: x`` part).
 ``tolerate`` function takes several arguments to configure the function
 behavior.
-These arguments are explained in Case study and detailed in API documentation.
+These arguments are explained in the Case study and detailed in the API documentation.
 
 .. _PEP-318: http://www.python.org/dev/peps/pep-0318/
 
@@ -149,15 +125,18 @@ Version 0.1.1
     + Drop off supporting Python 2.4 and 2.5
     + Support Python 3.2 and 3.3 via 2to3
     + Use tox_ for testing
+Version 1.0.0
+    + Breaking change: Removed support for Python 2
+    + Removed usage of use_2to3 in setup.py
 
 .. _tox: http://tox.readthedocs.org/en/latest/index.html
 
 Case study
 ----------
 
-Q. How can I return the default value when the function fail?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A. Use ``substitute`` argument to specify the default value like
+Q. How can I return the default value when the function fails?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Use the ``substitute`` argument to specify the default value like
 
 .. code-block:: python
     
@@ -168,9 +147,9 @@ A. Use ``substitute`` argument to specify the default value like
     >>> raise_exception()
     'foo'
 
-Q. How can I change the default value depends on passed arguments?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A. Specify ``substitute`` argument as a function
+Q. How can I change the default value depending on the passed in arguments?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Specify the ``substitute`` argument as a function
 
 .. code-block:: python
     
@@ -184,9 +163,9 @@ A. Specify ``substitute`` argument as a function
     >>> raise_exception('bar', 'hoge')
     'bar'
 
-Q. How can I make the function to ignore only several exceptions?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A. Use ``exceptions`` argument to specify exceptions which will be ignored.
+Q. How can I make the function ignore only certain exceptions?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Use the ``exceptions`` argument to specify exceptions which will be ignored.
 
 .. code-block:: python
     
@@ -212,8 +191,8 @@ A. Use ``exceptions`` argument to specify exceptions which will be ignored.
         ...
     KeyError
 
-Q. How can I disable ignoreing exceptions in the decorated function?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Q. How can I disable ignoring exceptions in the decorated function?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A. Pass ``fail_silently=False`` to the decorated function.
 
 .. code-block:: python
@@ -229,11 +208,11 @@ A. Pass ``fail_silently=False`` to the decorated function.
         ...
     KeyError
 
-You can change the attribute name with specifing new switch function.
+You can change the attribute name by specifing a new switch function.
 It will be explained below.
 
-Q. How can I disable ignoreing exceptions globally?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Q. How can I disable ignoring exceptions globally?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A. Set ``tolerate.disabled = True`` to disable tolerance globally.
 
 .. code-block:: python
@@ -252,9 +231,9 @@ A. Set ``tolerate.disabled = True`` to disable tolerance globally.
     >>> # rollback
     >>> tolerate.disabled = False
 
-Q. How can I disable ignoreing exceptions in complex mannar?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A. Use ``switch`` argument to specify switch function.
+Q. How can I disable ignoring exceptions in a complex manner?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Use the ``switch`` argument to specify the switch function.
 
 .. code-block:: python
     
@@ -286,7 +265,7 @@ A. Use ``switch`` argument to specify switch function.
         ...
     KeyError
 
-Q. I just want to change the attribute name, making switch function is too complicated
+Q. I just want to change the attribute name, making switch functions is too complicated
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A. Use ``argument_switch_generator`` to make switch function.
 
@@ -324,15 +303,15 @@ A. Use ``argument_switch_generator`` to make switch function.
     True
 
 .. note::
-    From Version 0.1.1, you can simply specify the argument name to ``switch``
-    argument and then  ``tolerant`` function will call
+    From Version 0.1.1, you can simply set the argument name to the ``switch``
+    argument and then the ``tolerant`` function will call
     ``argument_switch_generator`` internally with the specified name.
 
-    See detailed informations on API documentation
+    See detailed information in the API documentation
 
-Q. I want to make the function ignoreing exceptions only when ``fail_silently=True`` is passed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A. Use ``default`` argument to tell ``argument_switch_generator`` function
+Q. I want to make the function ignore exceptions only when ``fail_silently=True`` is passed in
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Use the ``default`` argument to set the ``argument_switch_generator`` function
 
 .. code-block:: python
     
@@ -372,11 +351,11 @@ A. Use ``default`` argument to tell ``argument_switch_generator`` function
     function will call ``argument_switch_generator`` internally with the
     specified arguments.
 
-    See detailed informations on API documentation
+    See detailed information in the API documentation
 
-Q. I want to disable the ignoreing exceptions when ``verbose=False`` is passed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A. Use ``reverse`` argument to tell ``argument_switch_generator`` function
+Q. I want to disable ignoring exceptions when ``verbose=False`` is passed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Use the ``reverse`` argument to set the ``argument_switch_generator`` function
 
 .. code-block:: python
     
@@ -405,9 +384,9 @@ A. Use ``reverse`` argument to tell ``argument_switch_generator`` function
         ...
     KeyError
 
-Q. I want to use ``fail_silently`` argument even in decorated function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A. Use ``keep`` argument to tell ``argument_switch_generator`` function
+Q. I want to use the ``fail_silently`` argument even in decorated function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Use the ``keep`` argument to set the ``argument_switch_generator`` function
 
 .. code-block:: python
     
